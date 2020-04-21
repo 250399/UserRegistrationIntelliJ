@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 public class UserRegistrationPasswordTest {
     String passwordRule1;
     String passwordRule2;
+    String passwordRule3;
     UserRegistration obj;
 
     @Before
@@ -16,6 +17,7 @@ public class UserRegistrationPasswordTest {
         obj=new UserRegistration();
         passwordRule1="[a-zA-Z0-9]{8,}";
         passwordRule2="(?=.*[A-Z])[a-zA-Z0-9]{8,}";
+        passwordRule3="(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}";
     }
 
     @Test
@@ -35,5 +37,14 @@ public class UserRegistrationPasswordTest {
     @Test
     public void testPasses_ifInput_DoesNotMatchesPasswordRule2(){
         Assert.assertFalse(obj.validate(passwordRule2,"asdf12sadsad"));
+    }
+    @Test
+    public void testPasses_ifInput_MatchesPasswordRule3(){
+        Assert.assertTrue(obj.validate(passwordRule3,"asdfA12345"));
+    }
+
+    @Test
+    public void testPasses_ifInput_DoesNotMatchesPasswordRule3(){
+        Assert.assertFalse(obj.validate(passwordRule3,"asdfsadsad"));
     }
 }
